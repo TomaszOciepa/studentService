@@ -4,10 +4,11 @@ import com.mango.studentService.model.Student;
 import com.mango.studentService.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/student")
 public class StudentController {
 
     private final StudentService studentService;
@@ -16,19 +17,34 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping
+    public List<Student> getStudents() {
+        return studentService.getStudents();
+    }
 
-    @PostMapping("/student")
-    public Student addStudent(@RequestBody Student student){
+    @PostMapping
+    public Student addStudent(@RequestBody Student student) {
         return studentService.addStudent(student);
     }
 
-    @GetMapping("student")
-    public List<Student> getStudents(){
-        return studentService.getAllStudents();
+    @GetMapping("/{id}")
+    public Student getStudent(@PathVariable String id) {
+        return studentService.getStudent(id);
     }
 
-    @GetMapping("student/{id}")
-    public Optional<Student> findStudentById(@PathVariable String id){
-        return studentService.findStudentById(id);
+    @DeleteMapping("/{id}")
+    public void deleteStudent(@PathVariable String id) {
+        studentService.deleteStudent(id);
     }
+
+    @PutMapping("/{id}")
+    public Student putStudent(@PathVariable String id, @Valid @RequestBody Student student) {
+        return studentService.putStudent(id, student);
+    }
+
+    @PatchMapping("/{id}")
+    public Student patchStudent(@PathVariable String id, @Valid @RequestBody Student student) {
+        return studentService.patchStudent(id, student);
+    }
+
 }

@@ -1,14 +1,29 @@
 package com.mango.studentService.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Document
 public class Student {
     @Id
     private String id;
+
+    @NotBlank
     private String firstName;
+
+    @NotEmpty
+    @Size(min = 3)
     private String lastName;
+
+    @NotBlank
+    @Email
+    @Indexed(unique = true) // email będzie unikalny
     private String email;
 
     public Student(String firstName, String lastName, String email) {

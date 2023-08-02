@@ -1,31 +1,21 @@
 package com.mango.studentService.service;
 
 import com.mango.studentService.model.Student;
-import com.mango.studentService.repo.StudentRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class StudentService {
+public interface StudentService {
 
-    private final StudentRepository studentRepository;
+    List<Student> getStudents();
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    Student addStudent(Student student);
 
-    public Student addStudent(Student student){
-        return studentRepository.save(student);
-    }
+    Student getStudent(String id);
 
-    public List<Student> getAllStudents(){
-        return studentRepository.findAll();
-    }
+    void deleteStudent(String id);
 
-    public Optional<Student> findStudentById(String id){
-        return studentRepository.findStudentById(id);
-    }
+    Student putStudent(String id, Student student);
+
+    Student patchStudent(String id, Student student);
 
 }
