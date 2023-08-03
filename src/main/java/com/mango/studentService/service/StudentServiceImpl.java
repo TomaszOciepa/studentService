@@ -43,8 +43,8 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(String id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentException(StudentError.STUDENT_NOT_FOUND));
-
-        studentRepository.delete(student);
+        student.setStatus(Status.INACTIVE);
+        studentRepository.save(student);
     }
 
     @Override
