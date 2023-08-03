@@ -35,8 +35,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudent(String id) {
-        return studentRepository.findById(id)
+        Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentException(StudentError.STUDENT_NOT_FOUND));
+        if (!Status.ACTIVE.equals(student.getStatus())) {
+            throw new StudentException(StudentError.STUDENT_IS_NOT_ACTIVE);
+        }
+        return student;
     }
 
     @Override
