@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -37,7 +36,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(String id) {
-        Student student = studentRepository.findStudentById(id)
+        Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentException(StudentError.STUDENT_NOT_FOUND));
 
         studentRepository.delete(student);
