@@ -1,13 +1,11 @@
 package com.mango.studentService.model;
 
+import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Document
 public class Student {
@@ -25,11 +23,14 @@ public class Student {
     @Email
     @Indexed(unique = true) // email będzie unikalny
     private String email;
+    @NotNull
+    private Status status;
 
-    public Student(String firstName, String lastName, String email) {
+    public Student(String firstName, String lastName, String email, Status status) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.status = status;
     }
 
     public Student() {
@@ -65,5 +66,13 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

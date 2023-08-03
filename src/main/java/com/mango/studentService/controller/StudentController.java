@@ -1,5 +1,6 @@
 package com.mango.studentService.controller;
 
+import com.mango.studentService.model.Status;
 import com.mango.studentService.model.Student;
 import com.mango.studentService.service.StudentService;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,10 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+//    @RequestParam(required = false) - parametr nie jest wtymagany
     @GetMapping
-    public List<Student> getStudents() {
-        return studentService.getStudents();
+    public List<Student> getStudents(@RequestParam(required = false) Status status) {
+        return studentService.getStudents(status);
     }
 
     @PostMapping
