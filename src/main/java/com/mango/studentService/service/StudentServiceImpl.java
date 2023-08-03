@@ -55,10 +55,15 @@ public class StudentServiceImpl implements StudentService {
     public Student putStudent(String id, Student student) {
         return studentRepository.findById(id)
                 .map(studentFromDb -> {
-                    vaildateStudentEmailExists(student);
+                    if (!studentFromDb.getEmail().equals(student.getEmail())
+                            && studentRepository.existsByEmail(student.getEmail())
+                    ) {
+                        throw new StudentException(StudentError.STUDENT_EMAIL_ALREADY_EXISTS);
+                    }
                     studentFromDb.setEmail(student.getEmail());
                     studentFromDb.setFirstName(student.getFirstName());
                     studentFromDb.setLastName(student.getLastName());
+                    studentFromDb.setStatus(student.getStatus());
                     return studentRepository.save(studentFromDb);
                 }).orElseThrow(() -> new StudentException(StudentError.STUDENT_NOT_FOUND));
 
@@ -73,6 +78,9 @@ public class StudentServiceImpl implements StudentService {
                     }
                     if (!StringUtils.isEmpty(student.getLastName())) {
                         studentFromDb.setLastName(student.getLastName());
+                    }
+                    if (!StringUtils.isEmpty(student.getStatus())) {
+                        studentFromDb.setStatus(student.getStatus());
                     }
                     return studentRepository.save(studentFromDb);
                 })).orElseThrow(() -> new StudentException(StudentError.STUDENT_NOT_FOUND));
