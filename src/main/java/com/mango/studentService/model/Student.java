@@ -1,6 +1,5 @@
 package com.mango.studentService.model;
 
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -39,6 +38,5 @@ public class Student {
 
     public Student() {
     }
-
 
 }
