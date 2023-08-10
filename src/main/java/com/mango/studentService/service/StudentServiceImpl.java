@@ -86,6 +86,11 @@ public class StudentServiceImpl implements StudentService {
                 })).orElseThrow(() -> new StudentException(StudentError.STUDENT_NOT_FOUND));
     }
 
+    @Override
+    public List<Student> getStudentsByEmails(List<String> emails) {
+        return studentRepository.findALLByEmailIn(emails);
+    }
+
     private void vaildateStudentEmailExists(Student student) {
         if (studentRepository.existsByEmail(student.getEmail())) {
             throw new StudentException(StudentError.STUDENT_EMAIL_ALREADY_EXISTS);

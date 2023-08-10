@@ -19,4 +19,5 @@ public interface StudentService {
 
     Student patchStudent(String id, Student student);
 
+    List<Student> getStudentsByEmails(List<String> emails);
 }
